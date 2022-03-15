@@ -1,15 +1,14 @@
 FROM golang:1.17.0-alpine
 
-COPY  . /app
-
 WORKDIR /app
 
 COPY go.mod ./
+COPY . ./
 
-COPY . ./app
+RUN go mod download
 
 RUN go mod download && go mod verify
 
-RUN go build app/main.go
+RUN go build ./main.go
 
-CMD [ "app/main" ]
+CMD [ "./main" ]
